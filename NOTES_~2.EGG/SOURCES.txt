@@ -1,0 +1,17 @@
+LICENSE
+README.md
+pyproject.toml
+notes_digest/__init__.py
+notes_digest/cli.py
+notes_digest/digest.py
+notes_digest/scanner.py
+notes_digest/summarizer.py
+notes_digest.egg-info/PKG-INFO
+notes_digest.egg-info/SOURCES.txt
+notes_digest.egg-info/dependency_links.txt
+notes_digest.egg-info/entry_points.txt
+notes_digest.egg-info/requires.txt
+notes_digest.egg-info/top_level.txt
+tests/test_cli.py
+tests/test_scanner.py
+tests/test_summarizer.py
