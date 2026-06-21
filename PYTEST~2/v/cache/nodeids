@@ -1,0 +1,12 @@
+[
+  "tests/test_cli.py::test_digest_without_scan_errors",
+  "tests/test_cli.py::test_dry_run_scan_and_digest",
+  "tests/test_cli.py::test_help_exits_cleanly",
+  "tests/test_scanner.py::test_cache_roundtrip",
+  "tests/test_scanner.py::test_file_hash_changes_with_content",
+  "tests/test_scanner.py::test_find_notes_filters_by_extension",
+  "tests/test_scanner.py::test_find_notes_ignores_cache_file",
+  "tests/test_summarizer.py::test_extract_json_parses_clean_object",
+  "tests/test_summarizer.py::test_extract_json_raises_without_object",
+  "tests/test_summarizer.py::test_extract_json_strips_surrounding_text"
+]
