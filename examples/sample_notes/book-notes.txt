@@ -1,0 +1,4 @@
+Reading "Thinking in Systems" again. Key idea this chapter: leverage points
+aren't where people expect -- changing a system's goal beats tweaking a
+parameter almost every time. Want to apply this to how Trinity routes tasks
+between agents instead of just tuning thresholds.
