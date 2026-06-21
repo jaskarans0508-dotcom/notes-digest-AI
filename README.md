@@ -1,2 +1,94 @@
-# notes-digest-AI
-Works as a notes app with the ability to use AI within it including being able to point towards folders
+# notes-digest
+
+A small CLI that points at a folder of notes (`.md` / `.txt`), summarizes and
+tags each one with Claude, and rolls everything up into a single readable
+`DIGEST.md`.
+
+```
+$ notes-digest scan ./my-notes
+  done:    standup-2026-06-18.md
+  done:    book-notes.txt
+
+Scanned 2 note(s): 2 processed, 0 unchanged, 0 failed.
+
+$ notes-digest digest ./my-notes --overview
+Wrote digest for 2 note(s) to my-notes/DIGEST.md
+```
+
+## Why
+
+Notes pile up and nobody re-reads them. This gives you a one-command summary
++ tag cloud over a folder, and only pays for an API call on files that
+actually changed since the last run.
+
+## Install
+
+```bash
+git clone <your-repo-url>
+cd notes-digest
+pip install -e .
+export ANTHROPIC_API_KEY=sk-ant-...
+```
+
+## Usage
+
+**1. Scan a folder.** This summarizes and tags every note, caching results
+in a `.notes_digest_cache.json` file so unchanged notes aren't re-processed
+(and re-billed) on the next run.
+
+```bash
+notes-digest scan ./my-notes
+```
+
+Useful flags:
+
+| Flag | Effect |
+|---|---|
+| `--ext .md .txt .org` | Which extensions to include (default: `.md .txt`) |
+| `--force` | Reprocess every note, ignoring the cache |
+| `--dry-run` | Skip the API entirely — fills the cache with placeholders so you can try the tool with no key |
+
+**2. Build the digest.**
+
+```bash
+notes-digest digest ./my-notes --overview -o weekly-digest.md
+```
+
+| Flag | Effect |
+|---|---|
+| `-o / --output` | Where to write the digest (default: `DIGEST.md` in the folder) |
+| `--title` | Custom digest title |
+| `--overview` | Adds a short synthesized overview paragraph (one extra API call) |
+
+Try it without an API key first:
+
+```bash
+notes-digest scan examples/sample_notes --dry-run
+notes-digest digest examples/sample_notes
+cat examples/sample_notes/DIGEST.md
+```
+
+## How it works
+
+```
+notes_digest/
+  scanner.py     # finds note files, hashes content, JSON cache
+  summarizer.py  # calls the Claude API, parses summary+tags out of the response
+  digest.py      # renders cached entries into markdown
+  cli.py         # argparse wiring: `scan` and `digest` subcommands
+```
+
+Each note's content hash is stored alongside its summary/tags. `scan` only
+calls the API for notes whose hash changed since last time, so re-running it
+on a big notes folder after editing one file is fast and cheap.
+
+## Testing
+
+```bash
+pip install -e ".[dev]"
+pytest
+```
+
+## License
+
+MIT

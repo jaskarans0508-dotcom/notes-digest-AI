@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+
+# generated at runtime, not source
+.notes_digest_cache.json
+DIGEST.md
+
+# leftover test/build artifacts (safety net in case they aren't deleted)
+*_DELETE_ME*
